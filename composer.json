@@ -1,0 +1,23 @@
+{
+    "name": "sos-solution/sos-http-application",
+    "description": "HTTP Application Framework support Nginx, Apache, Swoole Web Server",
+    "type": "library",
+    "homepage" : "https://github.com/sos-solution/sos-http-application",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/sos-solution/sos-http-application/issues",
+        "source": "https://github.com/sos-solution/sos-http-application",
+        "rss": "https://github.com/sos-solution/sos-http-application/releases.atom"
+    },    
+    "require": {
+        "php": "^5.4||^7.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "SosApp_"       : "src"
+        },
+        "psr-4": {
+            "SosApp\\"  : ["src/SosApp/"]
+        }
+    }
+}
