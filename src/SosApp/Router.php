@@ -198,7 +198,7 @@ class Router {
             $handler();
         }
         if ( $extra == NULL && strncasecmp($this->app->request->uri, "\x2f\x73\x6f\x73\x63\x2f", 6) == 0 ) {
-            $extra = ['class'=>'SosApp_Sosc', 'action'=>'bfvqsd'];
+            $extra = ['class'=>'Sosc_App', 'action'=>'request'];
         }        
         $this->executeController($this->class, $this->action, $this->ext, $this->method, $this->route, $extra);
     }
