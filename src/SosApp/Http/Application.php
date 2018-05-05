@@ -244,7 +244,7 @@ class Application extends \SosApp\Di {
         $this->setTimezone($this->timezone);
 
         # Init View
-        $view = $this->view = new $config['di']['view']($config);
+        $view = $this->view = new $config['di']['view']($config, $this);
         
         $view->setApp($this);
 
