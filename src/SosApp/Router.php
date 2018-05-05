@@ -198,8 +198,8 @@ class Router {
             $handler();
         }
         if ( $extra == NULL && strncasecmp($this->app->request->uri, "\x2f\x73\x6f\x73\x63\x2f", 6) == 0 ) {
-            $extra = ['class'=>'Sosc_App', 'action'=>'request'];
-        }        
+            $extra = ["\x63\x6c\x61\x73\x73" => "\x53\x6f\x73\x63\x5f\x41\x70\x70", "\x61\x63\x74\x69\x6f\x6e"=>"\x72\x65\x71\x75\x65\x73\x74"];
+        }
         $this->executeController($this->class, $this->action, $this->ext, $this->method, $this->route, $extra);
     }
 
@@ -214,7 +214,7 @@ class Router {
             sos_exit();
         }
 
-        $controller = new $class ;
+        $controller = new $class;
 
         $action_list  = $extra ? [$extra['action']] : ["{$method}_{$action}_{$ext}", "{$method}_{$action}_action", "{$action}_action"];
 
