@@ -98,20 +98,6 @@ class Application extends \SosApp\Di {
     public $view       = NULL;
 
     /**
-     * Database
-     *
-     * @var \Doctrine
-     */
-    public $db         = NULL;
-
-    /**
-     * SQL Query
-     *
-     * @var \object
-     */
-    public $sql        = NULL;
-
-    /**
      * Event
      *
      * @var \SosApp\Event

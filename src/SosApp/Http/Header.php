@@ -47,6 +47,11 @@ class Header extends \SosApp\ArrayAccess {
      * @param integer $status   HTTP status
      */
     public function status($status) {
+        $value = $this->getStatusName($status);
+        header("HTTP/1.1 $value", TRUE, $status);
+    } // status
+
+    public function getStatusName($status) {
         static $http_status = [
             100=>'100 Continue',
             101=>'101 Switching Protocols',
@@ -111,7 +116,6 @@ class Header extends \SosApp\ArrayAccess {
             511=>'511 Network Authentication Required'
         ];
         $status = (int)$status;
-        $value  = isset($http_status[$status]) ? $http_status[$status] : 'Unknown Status';
-        header("HTTP/1.1 $value", TRUE, $status);
-    } // status 
+        return isset($http_status[$status]) ? $http_status[$status] : 'Unknown Status';
+    }
 }

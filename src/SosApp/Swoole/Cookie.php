@@ -56,6 +56,34 @@ class Cookie extends \Sos\SimpleArrayObject {
         return $this->app->swoole_response->cookie($name, $value, $expires, '/', '', $secure, $httponly);
     }
 
+    public function get($name) {
+        return $this[$name];
+    }
+
+    public function encode($key, $name, $value, $expires = 0, $httponly = TRUE, $secure = FALSE) {
+        $this->set($name, \SosApp\JWT::encode($value, $key), $expires, $httponly, $secure);
+    }
+
+    public function decode($key, $name) {
+        $value = $this[$name];
+        if ( $value == '' ) {
+            return FALSE;
+        }
+        return \SosApp\JWT::decode($value, $key);
+    }
+
+    public function encrypt($key, $name, $value, $expires = 0, $httponly = TRUE, $secure = FALSE) {
+        $this->set($name, \SosApp\JWT::encrypt($value, $key), $expires, $httponly, $secure);
+    }
+
+    public function decrypt($key, $name) {
+        $value = $this[$name];
+        if ( $value == '' ) {
+            return FALSE;
+        }
+        return \SosApp\JWT::decrypt($value, $key);
+    }
+
     /**
      * Remove cookie
      *
