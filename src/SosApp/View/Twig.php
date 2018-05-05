@@ -26,7 +26,8 @@ class Twig extends Adapter
      *
      * @param array $config
      */
-    public function __construct($config) {
+    public function __construct($config, $app) {
+        $this->setApp($app);
         $loader = new \Twig_Loader_Filesystem($config['view']['viewsDir']);
 
         $options = [
@@ -56,8 +57,7 @@ class Twig extends Adapter
                     $part = explode('.', $filename);
                     $object = include $file;
 
-
-                    if ( !$object ) {
+                    if ( is_object($object) == FALSE && is_array($object) == FALSE ) {
                         trigger_error("Extending Twig return NULL in file:$file", E_USER_WARNING);
                         continue;
                     }

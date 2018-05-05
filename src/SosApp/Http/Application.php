@@ -98,6 +98,20 @@ class Application extends \SosApp\Di {
     public $view       = NULL;
 
     /**
+     * Database
+     *
+     * @var \Doctrine
+     */
+    public $db         = NULL;
+
+    /**
+     * SQL Query
+     *
+     * @var \object
+     */
+    public $sql        = NULL;
+
+    /**
      * Event
      *
      * @var \SosApp\Event
@@ -256,7 +270,11 @@ class Application extends \SosApp\Di {
      * @param callable $handler  Handler
      */
     static public function initConfig($handler) {
-        $config = parse_ini_file(APP_DIR . 'app/config/config.ini', TRUE, INI_SCANNER_NORMAL);
+        if ( is_readable(APP_DIR . 'app/config/config.ini') ) {
+            $config = parse_ini_file(APP_DIR . 'app/config/config.ini', TRUE, INI_SCANNER_NORMAL);    
+        } else {
+            $config = parse_ini_file(COMPOSER_DIR . 'core/config/config.ini', TRUE, INI_SCANNER_NORMAL);
+        }
 
         $phpini = $config['php.ini'];
 
