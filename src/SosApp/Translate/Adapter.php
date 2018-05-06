@@ -194,6 +194,10 @@ abstract class Adapter implements \ArrayAccess {
         return $this->_data[$locale];
     }
 
+    public function __get($name) {
+        return isset($this->_data[$name]) ? $this->_data[$name] : $name;
+    }
+
     /**
      * setBaseDir
      *
@@ -228,6 +232,10 @@ abstract class Adapter implements \ArrayAccess {
      */
     public function getLanguages() {
         return $this->langList;
+    }
+
+    public function getLanguage() {
+        return [$this->langList[$this->locale]];
     }
 
     /**

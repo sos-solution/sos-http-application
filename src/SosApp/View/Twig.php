@@ -107,6 +107,7 @@ class Twig extends Adapter
 
         $app->language->load($route);
         $app->data['app'] = $app;
+        $app->data['lang'] = $app->language;
 
         echo $this->twig->render($tplfile, $app->data);
     }
@@ -128,6 +129,7 @@ class Twig extends Adapter
 
         $app->language->load($route);
         $app->data['app'] = $app;
+        $app->data['lang'] = $app->language;
         
         echo $this->twig->render($tplfile, $app->data);
     }

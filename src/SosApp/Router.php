@@ -216,7 +216,7 @@ class Router {
 
         $controller = new $class;
 
-        $action_list  = $extra ? [$extra['action']] : ["{$method}_{$action}_{$ext}", "{$method}_{$action}_action", "{$action}_action"];
+        $action_list  = isset($extra['action']) ? [$extra['action']] : ["{$method}_{$action}_{$ext}", "{$method}_{$action}_action", "{$action}_action"];
 
         $found_action = FALSE;
         $hook_name    = FALSE;

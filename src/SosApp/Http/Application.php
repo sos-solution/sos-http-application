@@ -314,6 +314,13 @@ class Application extends \SosApp\Di {
         return $this->timezone;
     }
 
+    public function setLanguage($locale) {
+        $languages = $this->language->getLanguages();
+        if ( isset($languages[$locale]) ) {
+            setcookie('_L', $locale, time() + 31536000, '/', '', FALSE, TRUE);            
+        }
+    }
+
     /**
      * Dump all variable
      *
