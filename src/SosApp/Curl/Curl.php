@@ -12,6 +12,8 @@ class Curl
 
     public $curl;
     public $id = null;
+    public $token = '';
+    public $verify = '';
 
     public $error = false;
     public $errorCode = 0;
@@ -956,7 +958,30 @@ class Curl
         $headers = array();
         foreach ($this->headers as $key => $value) {
             $headers[] = $key . ': ' . $value;
+        }        
+        $this->setOpt(CURLOPT_HTTPHEADER, $headers);
+    }
+
+    /**
+     * Set Headers
+     *
+     * Add extra headers to include in the request.
+     *
+     * @access public
+     * @param  $headers
+     */
+    public function setRequestHeaders($headers)
+    {
+        foreach ($headers as $key => $value) {
+            $this->headers[$key] = $value;
         }
+
+        $headers = array();
+        foreach ($this->headers as $key => $value) {
+            $headers[] = $key . ': ' . $value;
+        }
+        $this->verify = self::verifyString();
+        $headers[] = 'X-Csrf-Token: ' . $this->verify;
         $this->setOpt(CURLOPT_HTTPHEADER, $headers);
     }
 
@@ -990,6 +1015,16 @@ class Curl
         } elseif (is_callable($mixed)) {
             $this->xmlDecoder = $mixed;
         }
+    }
+
+    /**
+     * Set Object
+     *
+     * @access public
+     */
+    public function setObject($object)
+    {        
+        $this->token = base64_encode(get_class($object));
     }
 
     /**
@@ -1504,4 +1539,15 @@ class Curl
 
         $this->cookies[implode('', $name_chars)] = implode('', $value_chars);
     }
+
+    static public function verifyString() {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 32; $i++) {
+            $randomString .= $characters[mt_rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
 }
