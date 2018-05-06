@@ -55,8 +55,9 @@ class Smarty3 extends Adapter
         $tplfile = $route . ".tpl";
 
         $app->language->load($route);
-
         $app->data['app'] = $app;
+        $app->data['lang'] = $app->language;
+
         $this->smarty->assign($app->data);
 
         $this->smarty->display($tplfile);
@@ -78,8 +79,8 @@ class Smarty3 extends Adapter
         $tplfile = "{$route}_{$action}" . ".tpl";
 
         $app->language->load($route);
-        
         $app->data['app'] = $app;
+        $app->data['lang'] = $app->language;
  
         $this->smarty->assign($app->data);
 
