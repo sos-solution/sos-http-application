@@ -14,6 +14,11 @@ namespace SosApp\Http;
  */
 class Cookie extends \SosApp\ArrayAccess {
 
+    public $__c_path = '/';
+    public $__c_domain = '';
+    public $__c_secure = FALSE;
+    public $__c_httponly = TRUE;
+
     /**
      * Set cookie
      *
@@ -23,20 +28,26 @@ class Cookie extends \SosApp\ArrayAccess {
      * @param bool $httponly    Only in http
      * @param secure $secure    Used in SSL
      */
-    public function set($name, $value, $expires = 0, $httponly = TRUE, $secure = FALSE) {
+    public function set($name, $value, $expires = 0, $httponly = NULL, $secure = NULL) {
         // 1262275200 = mktime(0, 0, 0, 1, 1, 2010) = 2010-01-01 00:00:00
         if ( $expires && $expires < 1262275200 ) {
             $expires = $expires + time();
+        }        
+        if ( $secure === NULL ) {
+            $secure = $this->__c_secure;
+        }
+        if ( $httponly === NULL ) {
+            $httponly = $this->__c_httponly;
         }
         $this[$name] = $value;
-        return setcookie($name, $value, $expires, '/', '', $secure, $httponly);
+        return setcookie($name, $value, $expires, $this->__c_path, $this->__c_domain, $secure, $httponly);
     }
 
     public function get($name) {
         return $this[$name];
     }
 
-    public function encode($key, $name, $value, $expires = 0, $httponly = TRUE, $secure = FALSE) {
+    public function encode($key, $name, $value, $expires = 0, $httponly = NULL, $secure = NULL) {
         $this->set($name, \SosApp\JWT::encode($value, $key), $expires, $httponly, $secure);
     }
 
@@ -48,7 +59,7 @@ class Cookie extends \SosApp\ArrayAccess {
         return \SosApp\JWT::decode($value, $key);
     }
 
-    public function encrypt($key, $name, $value, $expires = 0, $httponly = TRUE, $secure = FALSE) {
+    public function encrypt($key, $name, $value, $expires = 0, $httponly = NULL, $secure = NULL) {
         $this->set($name, \SosApp\JWT::encrypt($value, $key), $expires, $httponly, $secure);
     }
 

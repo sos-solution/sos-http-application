@@ -218,6 +218,13 @@ class Application extends \SosApp\Di {
         $cookie = $this->cookie = new \SosApp\Http\Cookie;
         $cookie->setData($_COOKIE);
 
+        if ( isset($config['cookie'])) {
+            foreach ( $config['cookie'] as $key => $value ) {
+                $property = "__c_" . $key;
+                $cookie->$property = $value;
+            }
+        }
+
         # Init Browser
         $browser = $this->browser = new \SosApp\Http\Browser;
 
