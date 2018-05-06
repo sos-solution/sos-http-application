@@ -133,4 +133,8 @@ class Twig extends Adapter
         
         echo $this->twig->render($tplfile, $app->data);
     }
+
+    public function addGlobal($name, $value) {
+        $this->twig->addGlobal($name, $value);
+    }
 }
