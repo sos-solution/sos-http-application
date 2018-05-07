@@ -88,6 +88,9 @@ class Twig extends Adapter
                 }
             }
         }
+        $twig->addGlobal('lang', $app->language);
+        $twig->addGlobal('app', $app);
+        $twig->addGlobal('req', $app->request);
         $this->twig = $twig;
     }
 
@@ -106,9 +109,6 @@ class Twig extends Adapter
         $tplfile = $route . ".twig";
 
         $app->language->load($route);
-        $app->data['app'] = $app;
-        $app->data['lang'] = $app->language;
-
         echo $this->twig->render($tplfile, $app->data);
     }
 
@@ -128,9 +128,6 @@ class Twig extends Adapter
         $tplfile = "{$route}_{$action}" . ".twig";
 
         $app->language->load($route);
-        $app->data['app'] = $app;
-        $app->data['lang'] = $app->language;
-        
         echo $this->twig->render($tplfile, $app->data);
     }
 
