@@ -13,46 +13,16 @@ namespace SosApp\Translate;
  * Class Adapter
  */
 abstract class Adapter implements \ArrayAccess {
-    /**
-     * data
-     *
-     * @var array
-     */
-    protected $locale         = '';
+    public $locale         = '';
 
-    /**
-     * data
-     *
-     * @var array
-     */
-    protected $defaultLocale  = '';
+    public $defaultLocale  = '';
 
-    /**
-     * data
-     *
-     * @var array
-     */
-    protected $overwirteMode  = TRUE;
+    public $overwirteMode  = TRUE;
 
-    /**
-     * data
-     *
-     * @var array
-     */
     protected $baseDir        = '';
 
-    /**
-     * data
-     *
-     * @var array
-     */
     private   $langList       = [];
 
-    /**
-     * data
-     *
-     * @var array
-     */
     private   $_data          = [];
 
     /**
@@ -216,6 +186,18 @@ abstract class Adapter implements \ArrayAccess {
         $this->locale = $locale;
     }
 
+    public function getLocale($locale) {
+        return $this->locale;
+    }
+
+    public function setDefaultLocale($locale) {
+        return $this->defaultLocale = $locale;
+    }
+
+    public function getDefaultLocale() {
+        return $this->defaultLocale;
+    }
+    
     /**
      * Load language
      *
