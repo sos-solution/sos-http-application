@@ -236,11 +236,6 @@ class Application extends \SosApp\Di {
 
         $this->setTimezone($this->timezone);
 
-        # Init View
-        $view = $this->view = new $config['di']['view']($config, $this);
-        
-        $view->setApp($this);
-
         # Init Event
         $this->event = new \SosApp\EventManager;
 
@@ -251,6 +246,11 @@ class Application extends \SosApp\Di {
             $lang_config['list']);
 
         $language->setBaseDir($appcfg['langsDir']);
+
+        # Init View
+        $view = $this->view = new $config['di']['view']($config, $this);
+        
+        $view->setApp($this);
 
         $handler = \Closure::bind($handler, $this, get_called_class());
 
@@ -264,7 +264,7 @@ class Application extends \SosApp\Di {
      */
     static public function initConfig($handler) {
         if ( is_readable(APP_DIR . 'app/config/config.ini') ) {
-            $config = parse_ini_file(APP_DIR . 'app/config/config.ini', TRUE, INI_SCANNER_NORMAL);    
+            $config = parse_ini_file(APP_DIR . 'app/config/config.ini', TRUE, INI_SCANNER_NORMAL);
         } else {
             $config = parse_ini_file(COMPOSER_DIR . 'core/config/config.ini', TRUE, INI_SCANNER_NORMAL);
         }
@@ -310,7 +310,7 @@ class Application extends \SosApp\Di {
     public function setLanguage($locale) {
         $languages = $this->language->getLanguages();
         if ( isset($languages[$locale]) ) {
-            setcookie('_L', $locale, time() + 31536000, '/', '', FALSE, TRUE);            
+            setcookie('_L', $locale, time() + 31536000, '/', '', FALSE, TRUE);
         }
     }
 
