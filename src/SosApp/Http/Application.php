@@ -264,7 +264,7 @@ class Application extends \SosApp\Di {
      */
     static public function initConfig($handler) {
         if ( is_readable(APP_DIR . 'app/config/config.ini') ) {
-            $config = parse_ini_file(APP_DIR . 'app/config/config.ini', TRUE, INI_SCANNER_NORMAL);
+            $config = parse_ini_file(APP_DIR . 'app/config/config.ini', TRUE, INI_SCANNER_NORMAL);    
         } else {
             $config = parse_ini_file(COMPOSER_DIR . 'core/config/config.ini', TRUE, INI_SCANNER_NORMAL);
         }
