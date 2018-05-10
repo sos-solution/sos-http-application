@@ -32,6 +32,7 @@ class Router {
     
     public function __construct($handler = null) {
         $patterns = [
+            '5' => '^/:_group/:_cata/:_namespace/:_class/:_action.:_ext:_params',
             '4' => '^/:_cata/:_namespace/:_class/:_action.:_ext:_params',
             '3' => '^/:_namespace/:_class/:_action.:_ext:_params',
             '2' => '^/:_class/:_action.:_ext:_params',
@@ -39,6 +40,7 @@ class Router {
         ];
 
         $require = [
+            '_group' => '[0-9a-z\_\-]+',
             '_cata' => '[0-9a-z\_\-]+',
             '_namespace' => '[0-9a-z\_\-]+',
             '_class' => '[0-9a-z\_\-]+',
@@ -126,6 +128,21 @@ class Router {
                 }
 
                 switch ( $pkey ) {
+                    case 5:
+                        $val = [
+                            'route'  => $_group . '/' . $_cata . '/' . $_namespace . '/' . $_class,
+                            'class'  => 'controller_' . $_group . '_' . $_cata . '_' . $_namespace . '_' . $_class,
+                            'action' => $_action,
+                            'ext' => $_ext,
+                            'params' => $params
+                        ];
+                        if ($more) {
+                            $val['dir'] = '/' . $_group . '/' . $_cata . '/' . $_namespace . '/' . $_class . '/';
+                            $val['basename'] = $_action . '.' . $_ext;
+                            $val['filename'] = $_action;
+                            $val['path'] = $val['dir'] . $val['basename'];
+                        }
+                        break;
                     case 4:
                         $val = [
                             'route'  => $_cata . '/' . $_namespace . '/' . $_class,
@@ -209,7 +226,7 @@ class Router {
         }
 
         if ( !class_exists($class, TRUE) ) {
-            $e = new Exception("Class Not Found", Exception::CLASS_NOT_FOUND);
+            $e = new Exception("Class Not Found: $class", Exception::CLASS_NOT_FOUND);
             throw $e;
             sos_exit();
         }
