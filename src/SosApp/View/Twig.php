@@ -78,7 +78,7 @@ class Twig extends Adapter
                         case 'test':
                             $twig->addTest($object);
                             break;
-                        case 'tokenparser':
+                        case 'tags':
                             $twig->addTokenParser($object);
                             break;
                         case 'runtimeloader':
@@ -88,9 +88,11 @@ class Twig extends Adapter
                 }
             }
         }
+        
         $twig->addGlobal('lang', $app->language);
         $twig->addGlobal('app', $app);
         $twig->addGlobal('req', $app->request);
+
         $this->twig = $twig;
     }
 
@@ -109,6 +111,7 @@ class Twig extends Adapter
         $tplfile = $route . ".twig";
 
         $app->language->load($route);
+        
         echo $this->twig->render($tplfile, $app->data);
     }
 
@@ -120,6 +123,7 @@ class Twig extends Adapter
      */
     public function subtemplate($action, $route = FALSE) {
         $app = $this->app;
+        $twig = $this->twig;
 
         if ( !$route ) {
             $route = $app->router->route;
@@ -128,7 +132,8 @@ class Twig extends Adapter
         $tplfile = "{$route}_{$action}" . ".twig";
 
         $app->language->load($route);
-        echo $this->twig->render($tplfile, $app->data);
+
+        echo $twig->render($tplfile, $app->data);
     }
 
     public function addGlobal($name, $value) {
