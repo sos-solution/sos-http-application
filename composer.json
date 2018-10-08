@@ -10,7 +10,8 @@
         "rss": "https://github.com/sos-solution/sos-http-application/releases.atom"
     },    
     "require": {
-        "php": "^5.4||^7.0"
+        "php": "^5.4||^7.0",
+        "curl/curl": "^1.9"
     },
     "autoload": {
         "psr-0": {

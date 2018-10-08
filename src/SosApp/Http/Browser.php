@@ -97,6 +97,10 @@ class Browser {
         }
     }
 
+    public function setScreen($height, $width) {
+        $cookie->set('_SC', sprintf("%d,%d", $height, $width));
+    }
+
     /**
      * Set Application
      *
